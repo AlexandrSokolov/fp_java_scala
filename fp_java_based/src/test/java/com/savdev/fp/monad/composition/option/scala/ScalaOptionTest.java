@@ -9,15 +9,33 @@ import static org.mockito.Mockito.when;
 
 public class ScalaOptionTest {
 
-    UserService userServiceMock = spy(new UserServiceTest());
+    UserServiceSO userServiceSOMock = spy(new UserServiceSOTest());
 
     @Test
     public void testGrandChildExistsViaFlatMap(){
-        when(userServiceMock.loadUser("u")).thenReturn(Option.apply(
-            Users.userWithGrandChild("u", "c","gc")));
-        Option<User> result = userServiceMock.getGrandChildViaFlatMap("u");
+        when(userServiceSOMock.loadUser("u")).thenReturn(Option.apply(
+            UsersSO.userWithGrandChild("u", "c","gc")));
+        Option<UserSO> result = userServiceSOMock.getGrandChildViaFlatMap("u");
         Assert.assertNotNull(result);
         Assert.assertFalse(result.isEmpty());
         Assert.assertEquals("gc", result.get().name);
+    }
+
+    @Test
+    public void testOnlyChildExistsViaFlatMap(){
+        when(userServiceSOMock.loadUser("u")).thenReturn(Option.apply(
+            UsersSO.userWithChild("u", "c")));
+        Option<UserSO> result = userServiceSOMock.getGrandChildViaFlatMap("u");
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void testUserWithoutChildViaFlatMap(){
+        when(userServiceSOMock.loadUser("u")).thenReturn(Option.apply(
+            UsersSO.userNoChild("u")));
+        Option<UserSO> result = userServiceSOMock.getGrandChildViaFlatMap("u");
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isEmpty());
     }
 }

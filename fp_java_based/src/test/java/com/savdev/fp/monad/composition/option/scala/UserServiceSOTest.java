@@ -5,9 +5,9 @@ import scala.Option;
 /**
  * Fake implementtion for tests. In tests we mock this abstract method
  */
-public class UserServiceTest implements UserService {
+public class UserServiceSOTest implements UserServiceSO {
     @Override
-    public Option<User> loadUser(String name) {
+    public Option<UserSO> loadUser(String name) {
         return Option.empty();
     }
 }
