@@ -37,10 +37,18 @@ trait UserService {
   *   String
   **/
 
-  def getGrandChildViaFlatMap(name:String):Option[User] =
+  def getGrandChildViaFlatMapChain(name:String):Option[User] =
     loadUser(name)
       .flatMap(x => x.child )
         .flatMap(x => x.child)
+
+  def getGrandChildViaFlatMapWithoutChain(name:String):Option[User] =
+    loadUser(name).flatMap {
+      us =>
+        us.child flatMap {
+          ch => ch.child
+        }
+    }
 
   def getGrandChildViaForComprehension(name:String):Option[User] =
     for {

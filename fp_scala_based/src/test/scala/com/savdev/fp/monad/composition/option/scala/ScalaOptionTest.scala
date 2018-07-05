@@ -15,7 +15,7 @@ class ScalaOptionTest {
   @Test def testGrandChildExistsViaFlatMap(): Unit = {
     when(userServiceMock.loadUser("u")).thenReturn(Some(
       userWithGrandChild(user="u", child="c", grandChild="gc")))
-    val result = userServiceMock.getGrandChildViaFlatMap("u")
+    val result = userServiceMock.getGrandChildViaFlatMapChain("u")
     Assert.assertNotNull(result)
     Assert.assertFalse(result.isEmpty)
     Assert.assertEquals("gc", result.get.name)
@@ -30,10 +30,19 @@ class ScalaOptionTest {
     Assert.assertEquals("gc", result.get.name)
   }
 
+  @Test def testGrandChildExistsViaFlatMapWithoutChain(): Unit = {
+    when(userServiceMock.loadUser("u")).thenReturn(Some(
+      userWithGrandChild(user="u", child="c", grandChild="gc")))
+    val result = userServiceMock.getGrandChildViaFlatMapWithoutChain("u")
+    Assert.assertNotNull(result)
+    Assert.assertFalse(result.isEmpty)
+    Assert.assertEquals("gc", result.get.name)
+  }
+
   @Test def testOnlyChildExistsViaFlatMap(): Unit = {
     when(userServiceMock.loadUser("u"))
       .thenReturn(Some(userWithChild(user="u", child="c")))
-    val result = userServiceMock.getGrandChildViaFlatMap("u")
+    val result = userServiceMock.getGrandChildViaFlatMapChain("u")
     Assert.assertNotNull(result)
     Assert.assertTrue(result.isEmpty)
   }
@@ -48,7 +57,7 @@ class ScalaOptionTest {
   @Test def testUserWithoutChildViaFlatMap(): Unit = {
     when(userServiceMock.loadUser("u"))
       .thenReturn(Some(userNoChild(user="u")))
-    val result = userServiceMock.getGrandChildViaFlatMap("u")
+    val result = userServiceMock.getGrandChildViaFlatMapChain("u")
     Assert.assertTrue(result.isEmpty)
   }
 
