@@ -4,7 +4,7 @@ import org.junit.{Assert, Test}
 import org.mockito.Mockito._
 
 //Fake implementation for tests
-class UserServiceTest extends UserService {
+class UserServiceTest extends UserServiceSO {
   override def loadUser(name: String): Option[User] = None
 }
 

@@ -2,7 +2,7 @@ package com.savdev.fp.monad.composition.option.java;
 
 import com.savdev.fp.monad.composition.option.scala.User;
 import com.savdev.fp.monad.composition.option.scala.User$;
-import com.savdev.fp.monad.composition.option.scala.UserService;
+import com.savdev.fp.monad.composition.option.scala.UserServiceSO;
 import com.savdev.fp.monad.composition.option.scala.UserServiceTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 
 public class ScalaOptionTest {
 
-    UserService userServiceMock = spy(new UserServiceTest());
+    UserServiceSO userServiceMock = spy(new UserServiceTest());
 
     @Test
     public void testGrandChildExistsViaFlatMap(){

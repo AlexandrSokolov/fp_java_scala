@@ -28,7 +28,7 @@ case class SimpleUser(name:String,
                       child:Option[User]=None)
   extends User
 
-trait UserService {
+trait UserServiceSO {
   def loadUser(name: String): Option[User]
 
 /**
