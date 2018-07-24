@@ -13,15 +13,15 @@ import static org.mockito.Mockito.when;
 
 public class ScalaOptionTest {
 
-    UserServiceSO userServiceMock = spy(new UserServiceTest());
+  UserServiceSO userServiceMock = spy(new UserServiceTest());
 
-    @Test
-    public void testGrandChildExistsViaFlatMap(){
-        when(userServiceMock.loadUser("u")).thenReturn(Option.apply(
-            User$.MODULE$.userWithGrandChild("u", "c","gc")));
-        Option<User> result = userServiceMock.getGrandChildViaFlatMapChain("u");
-        Assert.assertNotNull(result);
-        Assert.assertFalse(result.isEmpty());
-        Assert.assertEquals("gc", result.get().name());
-    }
+  @Test
+  public void testGrandChildExistsViaFlatMap() {
+    when(userServiceMock.loadUser("u")).thenReturn(Option.apply(
+      User$.MODULE$.userWithGrandChild("u", "c", "gc")));
+    Option<User> result = userServiceMock.getGrandChildViaFlatMapChain("u");
+    Assert.assertNotNull(result);
+    Assert.assertFalse(result.isEmpty());
+    Assert.assertEquals("gc", result.get().name());
+  }
 }

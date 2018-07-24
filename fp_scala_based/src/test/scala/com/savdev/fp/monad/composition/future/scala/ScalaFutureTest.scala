@@ -14,9 +14,9 @@ class ScalaFutureTest {
 
   object TestCappuchino extends Cappuccino
 
-  @Test def testSequential(): Unit ={
+  @Test def testSequential(): Unit = {
     val result = TestCappuchino.prepareCappuccinoSequentially()
-    result  onComplete {
+    result onComplete {
       case Success(cappuchino) => {
         println("onComplete successfully, thread: " + Thread.currentThread().getName)
         Assert.assertEquals("cappuccino", cappuchino)
@@ -28,9 +28,9 @@ class ScalaFutureTest {
     }
   }
 
-  @Test def testAsynchroniously(): Unit ={
+  @Test def testAsynchroniously(): Unit = {
     val result = TestCappuchino.prepareCappuccinoAsynchroniously()
-    result  onComplete {
+    result onComplete {
       case Success(cappuchino) => {
         println("onComplete successfully, thread: " + Thread.currentThread().getName)
         Assert.assertEquals("cappuccino", cappuchino)
@@ -47,9 +47,9 @@ class ScalaFutureTest {
       Future.failed(new IllegalStateException("Cannot froth"))
   }
 
-  @Test def testFailedCappuchino(): Unit ={
+  @Test def testFailedCappuchino(): Unit = {
     val result = FailedCappuchino.prepareCappuccinoAsynchroniously()
-    result  onComplete {
+    result onComplete {
       case Success(txt) => Assert.fail("Cannot be successul")
       case Failure(err) => Assert.assertEquals("Cannot froth", err.getMessage)
     }

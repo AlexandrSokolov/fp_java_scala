@@ -9,11 +9,12 @@ import scala.util.{Failure, Success}
 class ScalaFutureWithoutECTest {
 
   object TestCappuchino extends CappuccinoWithoutExecutionContext
+
   import scala.concurrent.ExecutionContext.Implicits.global
 
-  @Test def testAsynchroniously(): Unit ={
+  @Test def testAsynchroniously(): Unit = {
     val result = TestCappuchino.prepareCappuccinoAsynchroniously
-    result  onComplete {
+    result onComplete {
       case Success(cappuchino) =>
         println("onComplete successfully, thread: " + Thread.currentThread().getName)
         Assert.assertEquals("cappuccino", cappuchino)

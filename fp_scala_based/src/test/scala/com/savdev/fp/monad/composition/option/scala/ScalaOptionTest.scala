@@ -9,12 +9,14 @@ class UserServiceTest extends UserServiceSO {
 }
 
 class ScalaOptionTest {
+
   import com.savdev.fp.monad.composition.option.scala.User._
+
   val userServiceMock = spy(new UserServiceTest)
 
   @Test def testGrandChildExistsViaFlatMap(): Unit = {
     when(userServiceMock.loadUser("u")).thenReturn(Some(
-      userWithGrandChild(user="u", child="c", grandChild="gc")))
+      userWithGrandChild(user = "u", child = "c", grandChild = "gc")))
     val result = userServiceMock.getGrandChildViaFlatMapChain("u")
     Assert.assertNotNull(result)
     Assert.assertFalse(result.isEmpty)
@@ -23,7 +25,7 @@ class ScalaOptionTest {
 
   @Test def testGrandChildExistsViaForComprehension(): Unit = {
     when(userServiceMock.loadUser("u")).thenReturn(Some(
-      userWithGrandChild(user="u", child="c", grandChild="gc")))
+      userWithGrandChild(user = "u", child = "c", grandChild = "gc")))
     val result = userServiceMock.getGrandChildViaForComprehension("u")
     Assert.assertNotNull(result)
     Assert.assertFalse(result.isEmpty)
@@ -32,7 +34,7 @@ class ScalaOptionTest {
 
   @Test def testGrandChildExistsViaFlatMapWithoutChain(): Unit = {
     when(userServiceMock.loadUser("u")).thenReturn(Some(
-      userWithGrandChild(user="u", child="c", grandChild="gc")))
+      userWithGrandChild(user = "u", child = "c", grandChild = "gc")))
     val result = userServiceMock.getGrandChildViaFlatMapWithoutChain("u")
     Assert.assertNotNull(result)
     Assert.assertFalse(result.isEmpty)
@@ -41,7 +43,7 @@ class ScalaOptionTest {
 
   @Test def testOnlyChildExistsViaFlatMap(): Unit = {
     when(userServiceMock.loadUser("u"))
-      .thenReturn(Some(userWithChild(user="u", child="c")))
+      .thenReturn(Some(userWithChild(user = "u", child = "c")))
     val result = userServiceMock.getGrandChildViaFlatMapChain("u")
     Assert.assertNotNull(result)
     Assert.assertTrue(result.isEmpty)
@@ -49,21 +51,21 @@ class ScalaOptionTest {
 
   @Test def testOnlyChildExistsViaForComprehension(): Unit = {
     when(userServiceMock.loadUser("u"))
-      .thenReturn(Some(userWithChild(user="u", child="c")))
+      .thenReturn(Some(userWithChild(user = "u", child = "c")))
     val result = userServiceMock.getGrandChildViaForComprehension("u")
     Assert.assertTrue(result.isEmpty)
   }
 
   @Test def testUserWithoutChildViaFlatMap(): Unit = {
     when(userServiceMock.loadUser("u"))
-      .thenReturn(Some(userNoChild(user="u")))
+      .thenReturn(Some(userNoChild(user = "u")))
     val result = userServiceMock.getGrandChildViaFlatMapChain("u")
     Assert.assertTrue(result.isEmpty)
   }
 
   @Test def testUserWithoutChildViaForComprehension(): Unit = {
     when(userServiceMock.loadUser("u"))
-      .thenReturn(Some(userNoChild(user="u")))
+      .thenReturn(Some(userNoChild(user = "u")))
     val result = userServiceMock.getGrandChildViaForComprehension("u")
     Assert.assertTrue(result.isEmpty)
   }
