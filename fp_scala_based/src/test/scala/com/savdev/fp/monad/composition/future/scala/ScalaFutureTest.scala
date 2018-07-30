@@ -8,11 +8,15 @@ import org.junit.{Assert, Test}
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
+object TestCappuchino extends Cappuccino
+object FailedCappuchino extends Cappuccino {
+  override def frothMilk(milk: Milk): Future[FrothedMilk] =
+    Future.failed(new IllegalStateException("Cannot froth"))
+}
+
 class ScalaFutureTest {
 
   import scala.concurrent.ExecutionContext.Implicits.global
-
-  object TestCappuchino extends Cappuccino
 
   @Test def testSequential(): Unit = {
     val result = TestCappuchino.prepareCappuccinoSequentially()
@@ -42,10 +46,7 @@ class ScalaFutureTest {
     }
   }
 
-  object FailedCappuchino extends Cappuccino {
-    override def frothMilk(milk: Milk): Future[FrothedMilk] =
-      Future.failed(new IllegalStateException("Cannot froth"))
-  }
+
 
   @Test def testFailedCappuchino(): Unit = {
     val result = FailedCappuchino.prepareCappuccinoAsynchroniously()
