@@ -29,7 +29,7 @@ trait CappuccinoWithoutExecutionContext {
     if (beans == "baked beans") throw GrindingException("are you joking?")
     println("01.End finished grinding...")
     s"ground coffee of $beans"
-  }(executor)
+  }
 
   def heatWater(water: Water)(implicit executor: ExecutionContext)
   : Future[Water] = Future {
@@ -38,7 +38,7 @@ trait CappuccinoWithoutExecutionContext {
     TimeUnit.SECONDS.sleep(Random.nextInt(3))
     println("02.End hot, it's hot!")
     water.copy(temperature = 85)
-  }(executor)
+  }
 
   def frothMilk(milk: Milk)(implicit executor: ExecutionContext)
   : Future[FrothedMilk] = Future {
@@ -47,7 +47,7 @@ trait CappuccinoWithoutExecutionContext {
     TimeUnit.SECONDS.sleep(Random.nextInt(3))
     println("03.End shutting down milk frothing system")
     s"frothed $milk"
-  }(executor)
+  }
 
   def brew(coffee: GroundCoffee, heatedWater: Water)
           (implicit executor: ExecutionContext)
@@ -57,7 +57,7 @@ trait CappuccinoWithoutExecutionContext {
     TimeUnit.SECONDS.sleep(Random.nextInt(3))
     println("04.End it's brewed!")
     "espresso"
-  }(executor)
+  }
 
   def combine(espresso: Espresso, frothedMilk: FrothedMilk)
              (implicit executor: ExecutionContext)
@@ -67,7 +67,7 @@ trait CappuccinoWithoutExecutionContext {
     TimeUnit.SECONDS.sleep(Random.nextInt(3))
     println("05.End it's combined!")
     "cappuccino"
-  }(executor)
+  }
 
   // going through these steps synchroniously, wrong way:
   def prepareCappuccinoSequentially(implicit executor: ExecutionContext)
@@ -84,6 +84,7 @@ trait CappuccinoWithoutExecutionContext {
   // going through these steps asynchroniously:
   def prepareCappuccinoAsynchroniously(implicit executor: ExecutionContext)
   : Future[Cappuccino.Cappuccino] = {
+    println("Preparing cappucchino without specifiying execution context in API")
     val groundCoffee = grind("arabica beans")
     val heatedWater = heatWater(Water(20))
     val frothedMilk = frothMilk("milk")
