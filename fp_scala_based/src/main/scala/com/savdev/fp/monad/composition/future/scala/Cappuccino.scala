@@ -21,6 +21,7 @@ case class WaterBoilingException(msg: String) extends Exception(msg)
 case class BrewingException(msg: String) extends Exception(msg)
 
 trait Cappuccino {
+  //define non-overridable implicit
   import scala.concurrent.ExecutionContext.Implicits.global
   import scala.concurrent.Future
   import scala.util.Random
@@ -91,7 +92,7 @@ trait Cappuccino {
       foam <- frothedMilk
       espresso <- brew(ground, water)
       cappuchino <- combine(espresso, foam)
-    } yield (cappuchino)
+    } yield cappuchino
   }
 }
 
