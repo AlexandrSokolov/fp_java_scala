@@ -1,6 +1,6 @@
 package com.savdev.fp.monad.composition.future.scala
 
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.{Executors, TimeUnit}
 
 import scala.concurrent.ExecutionContext
 
@@ -14,7 +14,9 @@ trait CappuccinoWithOverridableExecutionContext {
 
   //do not import it:
   //import scala.concurrent.ExecutionContext.Implicits.global
-  val defaultEc = scala.concurrent.ExecutionContext.Implicits.global
+  //val defaultEc = scala.concurrent.ExecutionContext.Implicits.global
+  val defaultEc = ExecutionContext.fromExecutor(
+    Executors.newFixedThreadPool(5))
 
   def grind(beans: CoffeeBeans)
            (implicit executor:ExecutionContext = defaultEc)
