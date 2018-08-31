@@ -46,5 +46,11 @@ class ScalaFutureTest {
     }
   }
 
-
+  @Test def testAsynchroniouslyFlatMap(): Unit = {
+    val result = TestCappuchino.prepareCappuccinoAsynchroniouslyViaFlatMap()
+    result onComplete onCompleteHandler
+    while (!result.isCompleted) {
+      TimeUnit.SECONDS.sleep(2)
+    }
+  }
 }

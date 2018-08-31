@@ -2,6 +2,8 @@ package com.savdev.fp.monad.composition.future.scala
 
 import java.util.concurrent.TimeUnit
 
+import scalaz.Monad
+
 object Cappuccino {
   type CoffeeBeans = String
   type GroundCoffee = String
@@ -93,6 +95,22 @@ trait Cappuccino {
       espresso <- brew(ground, water)
       cappuchino <- combine(espresso, foam)
     } yield cappuchino
+  }
+
+  // going through these steps asynchroniously:
+  def prepareCappuccinoAsynchroniouslyViaFlatMap(): Future[Cappuccino.Cappuccino] = {
+    val groundCoffee = grind("arabica beans")
+    val heatedWater = heatWater(Water(20))
+    val frothedMilk = frothMilk("milk")
+    groundCoffee.flatMap(ground => {
+      heatedWater.flatMap( water => {
+        brew(ground, water)
+          .flatMap(espresso => {
+            frothedMilk
+              .flatMap(foam => { combine(espresso, foam) } )
+          })
+      })
+    })
   }
 }
 
