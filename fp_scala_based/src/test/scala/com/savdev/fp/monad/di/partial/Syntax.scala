@@ -3,7 +3,8 @@ package com.savdev.fp.monad.di.partial
 import scala.language.{higherKinds, implicitConversions}
 
 object Syntax {
-  implicit class FunctorSyntax[F[_]: Functor, A](a: F[A]) {
+
+  implicit class FunctorSyntax[F[_] : Functor, A](a: F[A]) {
     def map[B](f: A => B) = Functor[F].map(a)(f)
   }
 
@@ -11,7 +12,7 @@ object Syntax {
     def map[B](f: A => B) = Functor[({type f[x] = Function1[A1, x]})#f].map(a)(f)
   }
 
-  implicit class MonadSyntax[M[_]: Monad, A](a: M[A]) {
+  implicit class MonadSyntax[M[_] : Monad, A](a: M[A]) {
     def unit[A](a: => A) = Monad[M].unit(a)
 
     def flatMap[B](f: A => M[B]) = Monad[M].flatMap(a)(f)
@@ -22,6 +23,7 @@ object Syntax {
 
     def flatMap[B](f: A => A1 => B) = Monad[({type f[x] = Function1[A1, x]})#f].flatMap(a)(f)
   }
+
 }
 
 

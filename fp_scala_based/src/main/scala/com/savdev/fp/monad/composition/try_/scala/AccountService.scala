@@ -9,7 +9,7 @@ import scala.util.{Failure, Success, Try}
 
 object AccountService extends AccountService[Account, Amount, Balance] {
   def open(no: String, name: String, openingDate: Option[Date]): Try[Account] = {
-    if (no.isEmpty || name.isEmpty) Failure(new Exception(s"Account no or name cannot be blank") )
+    if (no.isEmpty || name.isEmpty) Failure(new Exception(s"Account no or name cannot be blank"))
     else if (openingDate.getOrElse(today) before today) Failure(new Exception(s"Cannot open account in the past"))
     else Success(Account(no, name, openingDate.getOrElse(today)))
   }

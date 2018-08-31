@@ -7,7 +7,9 @@ import scalaz.Monad
 object Cappuccino {
   type CoffeeBeans = String
   type GroundCoffee = String
+
   case class Water(temperature: Int)
+
   type Milk = String
   type FrothedMilk = String
   type Espresso = String
@@ -18,8 +20,11 @@ object Cappuccino {
 // (we'll need some of them later, use the others when experimenting
 // with the code):
 case class GrindingException(msg: String) extends Exception(msg)
+
 case class FrothingException(msg: String) extends Exception(msg)
+
 case class WaterBoilingException(msg: String) extends Exception(msg)
+
 case class BrewingException(msg: String) extends Exception(msg)
 
 trait Cappuccino {
@@ -55,7 +60,7 @@ trait Cappuccino {
   }
 
   def brew(coffee: GroundCoffee, heatedWater: Water)
-    : Future[Espresso] = Future {
+  : Future[Espresso] = Future {
     println("04.Start happy brewing :), " +
       "thread: " + Thread.currentThread().getName)
     TimeUnit.SECONDS.sleep(Random.nextInt(3))
@@ -64,7 +69,7 @@ trait Cappuccino {
   }
 
   def combine(espresso: Espresso, frothedMilk: FrothedMilk)
-    : Future[Cappuccino.Cappuccino] = Future {
+  : Future[Cappuccino.Cappuccino] = Future {
     println("05.Start happy combining :), " +
       "thread: " + Thread.currentThread().getName)
     TimeUnit.SECONDS.sleep(Random.nextInt(3))
@@ -103,11 +108,13 @@ trait Cappuccino {
     val heatedWater = heatWater(Water(20))
     val frothedMilk = frothMilk("milk")
     groundCoffee.flatMap(ground => {
-      heatedWater.flatMap( water => {
+      heatedWater.flatMap(water => {
         brew(ground, water)
           .flatMap(espresso => {
             frothedMilk
-              .flatMap(foam => { combine(espresso, foam) } )
+              .flatMap(foam => {
+                combine(espresso, foam)
+              })
           })
       })
     })

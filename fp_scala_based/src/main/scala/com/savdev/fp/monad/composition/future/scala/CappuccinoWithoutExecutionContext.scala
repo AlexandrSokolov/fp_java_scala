@@ -7,16 +7,17 @@ import scala.concurrent.ExecutionContext
 /**
   * Only client should decide, which execution context should be used
   * as a result methods cannot be defined as:
-  *   def grind(beans: CoffeeBeans): Future[GroundCoffee] = Future {...}
+  * def grind(beans: CoffeeBeans): Future[GroundCoffee] = Future {...}
   * but ExecutionContext must be passed implicitly:
-  *   def grind(beans: CoffeeBeans)(implicit executor: ExecutionContext)
-  *     : Future[GroundCoffee] = Future {...}
+  * def grind(beans: CoffeeBeans)(implicit executor: ExecutionContext)
+  * : Future[GroundCoffee] = Future {...}
   * only the client of component should specify execution context and pass it implicitly:
-  *   import scala.concurrent.ExecutionContext.Implicits.global
-  *   ...
+  * import scala.concurrent.ExecutionContext.Implicits.global
+  * ...
   *   c.grind(...)
   */
 trait CappuccinoWithoutExecutionContext {
+
   import scala.concurrent.Future
   import scala.util.Random
   import com.savdev.fp.monad.composition.future.scala.Cappuccino._

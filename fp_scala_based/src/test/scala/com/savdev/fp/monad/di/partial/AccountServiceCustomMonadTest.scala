@@ -15,7 +15,7 @@ class AccountServiceCustomMonadTest {
     b <- balance(no)
   } yield b
 
-  @Test def testOpComposition:Unit = {
+  @Test def testOpComposition: Unit = {
     val newOp = for {
       _ <- open("a-123", "Alex", Option.empty)
       b <- op("a-123")
@@ -27,7 +27,7 @@ class AccountServiceCustomMonadTest {
     println(balance)
   }
 
-  @Test def testOpCompositionNotExistingAccount:Unit = {
+  @Test def testOpCompositionNotExistingAccount: Unit = {
     val balance = op("a-123")(AccountRepositoryInMemory)
     Assert.assertTrue(balance.isFailure)
     Assert.assertEquals("No account exists with no a-123", balance.failed.get.getMessage)

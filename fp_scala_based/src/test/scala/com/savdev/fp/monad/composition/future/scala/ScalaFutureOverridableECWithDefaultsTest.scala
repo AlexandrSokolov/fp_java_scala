@@ -6,13 +6,15 @@ import org.junit.Test
 
 /**
   * In prepareCappuccinoSequentially the default ExecutionContext
-  *   chosen by API definition is used
+  * chosen by API definition is used
   * In Future.onComplete ExecutionContext passed explicitely is used
   */
 class ScalaFutureOverridableECWithDefaultsTest {
 
   object TestCappuchino extends CappuccinoWithOverridableExecutionContext
+
   import com.savdev.fp.monad.composition.future.scala.TestUtils.onCompleteHandler
+
   @Test def testSequential(): Unit = {
     val result = TestCappuchino.prepareCappuccinoSequentially()
 

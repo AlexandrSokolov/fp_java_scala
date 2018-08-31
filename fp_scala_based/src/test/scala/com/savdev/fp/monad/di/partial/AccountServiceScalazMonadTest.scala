@@ -5,8 +5,9 @@ import org.junit.{Assert, Test}
 
 class AccountServiceScalazMonadTest {
 
-  import scalaz.Scalaz._  //contains Monad for Function1
+  import scalaz.Scalaz._ //contains Monad for Function1
   import AccountService._
+
   def op(no: String) = for {
     _ <- credit(no, BigDecimal(100))
     _ <- credit(no, BigDecimal(300))
@@ -14,7 +15,7 @@ class AccountServiceScalazMonadTest {
     b <- balance(no)
   } yield b
 
-  @Test def testOpComposition:Unit = {
+  @Test def testOpComposition: Unit = {
     val newOp = for {
       _ <- open("a-123", "Alex", Option.empty)
       b <- op("a-123")
@@ -26,7 +27,7 @@ class AccountServiceScalazMonadTest {
     println(balance)
   }
 
-  @Test def testOpCompositionNotExistingAccount:Unit = {
+  @Test def testOpCompositionNotExistingAccount: Unit = {
     val balance = op("a-123")(AccountRepositoryInMemory)
     Assert.assertTrue(balance.isFailure)
     Assert.assertEquals("No account exists with no a-123", balance.failed.get.getMessage)

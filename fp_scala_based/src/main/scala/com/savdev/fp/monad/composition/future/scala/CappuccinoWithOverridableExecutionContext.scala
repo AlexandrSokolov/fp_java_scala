@@ -8,6 +8,7 @@ import scala.concurrent.ExecutionContext
   * Client can reuse default implicit execution context or override it
   */
 trait CappuccinoWithOverridableExecutionContext {
+
   import scala.concurrent.Future
   import scala.util.Random
   import com.savdev.fp.monad.composition.future.scala.Cappuccino._
@@ -19,7 +20,7 @@ trait CappuccinoWithOverridableExecutionContext {
     Executors.newFixedThreadPool(5))
 
   def grind(beans: CoffeeBeans)
-           (implicit executor:ExecutionContext = defaultEc)
+           (implicit executor: ExecutionContext = defaultEc)
   : Future[GroundCoffee] = Future {
     println("01.Start start grinding..., " +
       "thread: " + Thread.currentThread().getName)
@@ -30,7 +31,7 @@ trait CappuccinoWithOverridableExecutionContext {
   }
 
   def heatWater(water: Water)
-               (implicit executor:ExecutionContext = defaultEc)
+               (implicit executor: ExecutionContext = defaultEc)
   : Future[Water] = Future {
     println("02.Start heating the water now, " +
       "thread: " + Thread.currentThread().getName)
@@ -40,7 +41,7 @@ trait CappuccinoWithOverridableExecutionContext {
   }
 
   def frothMilk(milk: Milk)
-               (implicit executor:ExecutionContext = defaultEc )
+               (implicit executor: ExecutionContext = defaultEc)
   : Future[FrothedMilk] = Future {
     println("03.Start milk frothing system engaged!, " +
       "thread: " + Thread.currentThread().getName)
@@ -50,7 +51,7 @@ trait CappuccinoWithOverridableExecutionContext {
   }
 
   def brew(coffee: GroundCoffee, heatedWater: Water)
-          (implicit executor:ExecutionContext = defaultEc )
+          (implicit executor: ExecutionContext = defaultEc)
   : Future[Espresso] = Future {
     println("04.Start happy brewing :), " +
       "thread: " + Thread.currentThread().getName)
@@ -60,7 +61,7 @@ trait CappuccinoWithOverridableExecutionContext {
   }
 
   def combine(espresso: Espresso, frothedMilk: FrothedMilk)
-             (implicit executor:ExecutionContext = defaultEc )
+             (implicit executor: ExecutionContext = defaultEc)
   : Future[Cappuccino.Cappuccino] = Future {
     println("05.Start happy combining :), " +
       "thread: " + Thread.currentThread().getName)
@@ -70,7 +71,7 @@ trait CappuccinoWithOverridableExecutionContext {
   }
 
   // going through these steps synchroniously, wrong way:
-  def prepareCappuccinoSequentially(implicit executor:ExecutionContext = defaultEc )
+  def prepareCappuccinoSequentially(implicit executor: ExecutionContext = defaultEc)
   : Future[Cappuccino.Cappuccino] = {
     for {
       ground <- grind("arabica beans")
@@ -82,7 +83,7 @@ trait CappuccinoWithOverridableExecutionContext {
   }
 
   // going through these steps asynchroniously:
-  def prepareCappuccinoAsynchroniously(implicit executor:ExecutionContext = defaultEc)
+  def prepareCappuccinoAsynchroniously(implicit executor: ExecutionContext = defaultEc)
   : Future[Cappuccino.Cappuccino] = {
     println("Preparing cappucchino with overridable execution context")
     val groundCoffee = grind("arabica beans")

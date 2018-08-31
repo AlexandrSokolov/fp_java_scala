@@ -13,7 +13,7 @@ object TestCappuchinoOverridableEc extends CappuccinoWithOverridableExecutionCon
   */
 class ScalaFutureOverridableECTest {
 
-//  object TestCappuchino extends CappuccinoWithOverridableExecutionContext
+  //  object TestCappuchino extends CappuccinoWithOverridableExecutionContext
   import com.savdev.fp.monad.composition.future.scala.TestUtils.onCompleteHandler
   //used implicit ExecutionContext for both Future.onComplete AND
   // TestCappuchinoOverridableEc.prepareCappuccinoSequentially or
