@@ -3,6 +3,8 @@ package com.savdev.fp.monad.di.partial
 import com.savdev.fp.monad.di.{AccountRepositoryInMemory, Balance}
 import org.junit.{Assert, Test}
 
+class TestAccountRepository extends AccountRepositoryInMemory
+
 class AccountServiceScalazMonadTest {
 
   import scalaz.Scalaz._ //contains Monad for Function1
@@ -21,14 +23,14 @@ class AccountServiceScalazMonadTest {
       b <- op("a-123")
     } yield b
 
-    val balance = newOp(AccountRepositoryInMemory)
+    val balance = newOp(new TestAccountRepository)
     Assert.assertTrue(balance.isSuccess)
     Assert.assertEquals(Balance(240), balance.get)
     println(balance)
   }
 
   @Test def testOpCompositionNotExistingAccount: Unit = {
-    val balance = op("a-123")(AccountRepositoryInMemory)
+    val balance = op("a-123")(new TestAccountRepository)
     Assert.assertTrue(balance.isFailure)
     Assert.assertEquals("No account exists with no a-123", balance.failed.get.getMessage)
     println(balance)
