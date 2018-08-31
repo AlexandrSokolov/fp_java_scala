@@ -59,15 +59,6 @@ object AccountService extends AccountService[Account, Amount, Balance] {
     }
 
   def balance(no: String) = (repo: AccountRepository) => repo.balance(no)
-
-  //  import scalaz.Scalaz._
-  //
-  //  def opComposition(no: String) = for {
-  //    _ <- credit(no, BigDecimal(100))
-  //    _ <- credit(no, BigDecimal(300))
-  //    _ <- debit(no, BigDecimal(160))
-  //    b <- balance(no)
-  //  } yield b
 }
 
 
